@@ -1,9 +1,16 @@
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import './App.css';
+
+import Auth from './components/pages/Auth';
+import NavigationBar from './components/layouts/NavigationBar';
 
 function App() {
   return (
     <div className="App">
-      <h1>Expense Manager Frontend</h1>
+      <NavigationBar />
+      <Auth />
     </div>
   );
 }
