@@ -11,22 +11,27 @@ import setTokenInHeader from "./utils/setTokenInHeader";
 import PageNotFound from "./components/page/PageNotFound";
 import ExpenseState from "./context/expense/ExpenseState";
 import AuthState from "./context/auth/AuthState";
+import AlertState from "./context/alert/AlertState";
+import { Alerts } from "./components/layout/Alerts";
 
 function App() {
   setTokenInHeader();
   return (
     <AuthState>
       <ExpenseState>
-        <div className="App">
-          <NavigationBar />
-          <Router>
-            <Routes>
-              <Route exact path="/" element={<Auth />} />
-              <Route exact path="/home" element={<Home />} />
-              <Route path="*" element={<PageNotFound />} />
-            </Routes>
-          </Router>
-        </div>
+        <AlertState>
+          <div className="App">
+            <NavigationBar />
+            <Alerts />
+            <Router>
+              <Routes>
+                <Route exact path="/" element={<Auth />} />
+                <Route exact path="/home" element={<Home />} />
+                <Route path="*" element={<PageNotFound />} />
+              </Routes>
+            </Router>
+          </div>
+        </AlertState>
       </ExpenseState>
     </AuthState>
   );
