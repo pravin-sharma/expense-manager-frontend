@@ -1,46 +1,65 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import AlertContext from "../../context/alert/alertContext";
 
 const Register = () => {
-  let [name, setName] = useState("");
-  let [email, setEmail] = useState("");
-  let [password, setPassword] = useState("");
-  let [confirmPassword, setConfirmPassword] = useState("");
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-  const handleSubmit = async(event) =>{
+  const { name, email, password, confirmPassword } = user;
+
+  const alertContext = useContext(AlertContext)
+  const {setAlert} = alertContext;
+
+  const onChange = (e) =>{
+    setUser({ ...user, [e.target.name]: e.target.value});
+  }
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if(!isPasswordMatched()){
-      return alert('Password does not match.')
+    console.log('Registered')
+
+    // Registration Integration logic
+    if (!isPasswordMatched()) {
+      setAlert("Password does not match.", 'danger')
     }
 
-    try {
-      const response = await axios.post('http://localhost:4000/api/v1/register', {
-        name, email, password
-      })
-    
-      console.log(response.data);
-      alert(response.data?.message);
-      clearField();
-      
-    } catch (error) {
-      console.log('error: ',error.response?.data);
-      alert(error.response?.data?.message);
+    // try {
+    //   const response = await axios.post(
+    //     "http://localhost:4000/api/v1/register",
+    //     {
+    //       name,
+    //       email,
+    //       password,
+    //     }
+    //   );
 
-    }
+    //   console.log(response.data);
+    //   alert(response.data?.message);
+    //   clearField();
+    // } catch (error) {
+    //   console.log("error: ", error.response?.data);
+    //   alert(error.response?.data?.message);
+    // }
+  };
 
-  }
-
-  const isPasswordMatched = () =>{
+  const isPasswordMatched = () => {
     return password === confirmPassword;
-  }
+  };
 
-  const clearField = () =>{
-    setName('')
-    setEmail('')
-    setPassword('')
-    setConfirmPassword('')
-  }
+  const clearField = () => {
+    setUser({
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
+  };
 
   return (
     <div className="container">
@@ -52,12 +71,13 @@ const Register = () => {
           </label>
           <input
             id="name"
+            name="name"
             className="form-control"
             type="text"
             placeholder="Enter name"
-            required
-            onChange={(e) => setName(e.target.value)}
+            onChange={onChange}
             value={name}
+            required
           />
         </div>
 
@@ -67,31 +87,34 @@ const Register = () => {
           </label>
           <input
             id="registerEmail"
+            name="email"
             className="form-control"
             type="email"
             placeholder="Enter email"
             aria-describedby="emailHelp"
-            required
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={onChange}
             value={email}
+            required
           />
           <div id="emailHelp" className="form-text">
             We'll never share your email with anyone else.
-          </div >
+          </div>
         </div>
 
         <div className="mb-3">
-          <label htmlFor="password" className="form-label">
+          <label htmlFor="registerPassword" className="form-label">
             Password
           </label>
           <input
-            id="password"
+            id="registerPassword"
+            name="password"
             className="form-control"
             type="password"
             placeholder="Password"
-            required
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={onChange}
             value={password}
+            required
+            minLength={6}
           />
         </div>
 
@@ -101,15 +124,21 @@ const Register = () => {
           </label>
           <input
             id="confirmPassword"
+            name="confirmPassword"
             className="form-control"
             type="password"
             placeholder="Re-enter password"
-            required
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            onChange={onChange}
             value={confirmPassword}
+            required
+            minLength={6}
           />
         </div>
-        <button className="btn my-btn-primary" type="submit" onClick={(e)=>handleSubmit(e)}>
+        <button
+          className="btn my-btn-primary"
+          type="submit"
+          onClick={handleSubmit}
+        >
           Register | <i className="fa-solid fa-user-plus" />
         </button>
       </form>
