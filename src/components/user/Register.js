@@ -1,11 +1,51 @@
-import React from "react";
-import { Form } from "react-bootstrap";
+import axios from "axios";
+import React, { useState } from "react";
 
 const Register = () => {
+  let [name, setName] = useState("");
+  let [email, setEmail] = useState("");
+  let [password, setPassword] = useState("");
+  let [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleSubmit = async(event) =>{
+    event.preventDefault();
+
+    if(!isPasswordMatched()){
+      return alert('Password does not match.')
+    }
+
+    try {
+      const response = await axios.post('http://localhost:4000/api/v1/register', {
+        name, email, password
+      })
+    
+      console.log(response.data);
+      alert(response.data?.message);
+      clearField();
+      
+    } catch (error) {
+      console.log('error: ',error.response?.data);
+      alert(error.response?.data?.message);
+
+    }
+
+  }
+
+  const isPasswordMatched = () =>{
+    return password === confirmPassword;
+  }
+
+  const clearField = () =>{
+    setName('')
+    setEmail('')
+    setPassword('')
+    setConfirmPassword('')
+  }
+
   return (
     <div className="container">
       <h1 className="text-center">Registration</h1>
-      <Form className="border-start p-4">
+      <form className="p-4">
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
             Name
@@ -15,6 +55,9 @@ const Register = () => {
             className="form-control"
             type="text"
             placeholder="Enter name"
+            required
+            onChange={(e) => setName(e.target.value)}
+            value={name}
           />
         </div>
 
@@ -27,10 +70,14 @@ const Register = () => {
             className="form-control"
             type="email"
             placeholder="Enter email"
+            aria-describedby="emailHelp"
+            required
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
           />
-          <Form.Text className="text-muted">
+          <div id="emailHelp" className="form-text">
             We'll never share your email with anyone else.
-          </Form.Text>
+          </div >
         </div>
 
         <div className="mb-3">
@@ -42,6 +89,9 @@ const Register = () => {
             className="form-control"
             type="password"
             placeholder="Password"
+            required
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
           />
         </div>
 
@@ -54,10 +104,15 @@ const Register = () => {
             className="form-control"
             type="password"
             placeholder="Re-enter password"
+            required
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            value={confirmPassword}
           />
         </div>
-        <button className="btn my-btn-primary">Register | <i className="fa-solid fa-user-plus" /></button>
-      </Form>
+        <button className="btn my-btn-primary" type="submit" onClick={(e)=>handleSubmit(e)}>
+          Register | <i className="fa-solid fa-user-plus" />
+        </button>
+      </form>
     </div>
   );
 };
