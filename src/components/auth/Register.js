@@ -1,51 +1,59 @@
-import axios from "axios";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AlertContext from "../../context/alert/alertContext";
+import AuthContext from "../../context/auth/authContext";
 
 const Register = () => {
+  const navigate = useNavigate();
+
+  const alertContext = useContext(AlertContext);
+  const { setAlert } = alertContext;
+
+  const authContext = useContext(AuthContext);
+  const { registerUser, error, isAuthenticated, clearError } = authContext;
+
   const [user, setUser] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
-
   const { name, email, password, confirmPassword } = user;
 
-  const alertContext = useContext(AlertContext)
-  const {setAlert} = alertContext;
+  useEffect(() => {
+    if (error) {
+      setAlert(`Register: ${error}`, "danger");
+      clearError();
+    }
+  }, [error]);
 
-  const onChange = (e) =>{
-    setUser({ ...user, [e.target.name]: e.target.value});
-  }
+  useEffect(() => {
+    // confirmPassword to uniquely invoke the alert as Register Alert
+    if (isAuthenticated && confirmPassword) {
+      setAlert(`User with Email: ${email} Registered`, "success");
+      navigate("/home");
+      clearField();
+    }
+  }, [isAuthenticated]);
+
+  const onChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    console.log('Registered')
-
-    // Registration Integration logic
     if (!isPasswordMatched()) {
-      setAlert("Password does not match.", 'danger')
+      setAlert("Password does not match.", "danger");
+      return;
     }
 
-    // try {
-    //   const response = await axios.post(
-    //     "http://localhost:4000/api/v1/register",
-    //     {
-    //       name,
-    //       email,
-    //       password,
-    //     }
-    //   );
+    registerUser({
+      name,
+      email,
+      password,
+    });
 
-    //   console.log(response.data);
-    //   alert(response.data?.message);
-    //   clearField();
-    // } catch (error) {
-    //   console.log("error: ", error.response?.data);
-    //   alert(error.response?.data?.message);
-    // }
+    // clearField();
   };
 
   const isPasswordMatched = () => {

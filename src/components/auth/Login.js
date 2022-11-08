@@ -1,48 +1,54 @@
-import axios from "axios";
 import React, { useState } from "react";
+import { useEffect } from "react";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import AlertContext from "../../context/alert/alertContext";
+import AuthContext from "../../context/auth/authContext";
 
 function Login() {
-  const [user, setUser] = useState({
+  const navigate = useNavigate();
+
+  const { login, error, isAuthenticated, clearError } = useContext(AuthContext);
+  const { setAlert } = useContext(AlertContext);
+
+  useEffect(() => {
+    if (error) {
+      setAlert(error, "danger");
+      clearError();
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (isAuthenticated && email && password) {
+      //using email, password to uniquely invoke the alert as Login Alert
+      setAlert("Login Successful", "success");
+      navigate("/home");
+      clearField();
+    }
+  }, [isAuthenticated]);
+
+  const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  const { email, password } = user;
+  const { email, password } = formData;
 
   const onChange = (e) => {
-    setUser({
-      ...user,
+    setFormData({
+      ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("logged in");
 
-    // Login backend integration logic
-    // try {
-    //   const response = await axios.post("http://localhost:4000/api/v1/login", {
-    //     email,
-    //     password
-    //   });
-
-    //   console.log(response);
-    //   alert(response.data?.message);
-    //   clearField();
-    //   // set token in local storage
-    //   localStorage.setItem('token', response.data?.token)
-    //   //TODO: attach a bearer token while sending back in header
-    //   //TODO: redirect to home
-
-    // } catch (error) {
-    //   console.log("error: ", error.response?.data);
-    //   alert(error.response?.data?.message);
-    // }
+    login(formData);
   };
 
   const clearField = () => {
-    setUser({
+    setFormData({
       email: "",
       password: "",
     });
