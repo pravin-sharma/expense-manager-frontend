@@ -1,12 +1,11 @@
 import axios from "axios";
 
-const setTokenInHeader = () =>{
-    const token = localStorage.getItem('token');
-    if(token){
-        axios.defaults.headers.common['x-auth-token'] = token;
-    }else{
-        axios.defaults.headers.common['x-auth-token'] = null;
-    }
-}
+const setTokenInHeader = (token) => {
+  if (token) {
+    axios.defaults.headers.common["authorization"] = `Bearer ${token}`;
+  } else {
+    axios.defaults.headers.common["authorization"] = null;
+  }
+};
 
 export default setTokenInHeader;
