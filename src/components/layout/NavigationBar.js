@@ -8,13 +8,13 @@ import { Link, useNavigate } from "react-router-dom";
 const NavigationBar = ({ title, logo }) => {
   const { logout, isAuthenticated, user } = useContext(AuthContext);
   const { setAlert } = useContext(AlertContext);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const onLogout = () => {
     logout();
     setAlert("Logged Out Successfully", "warning");
     // TODO: instead of navigate use private route
-    navigate("/login");
+    // navigate("/login");
   };
 
   const AuthLink = (

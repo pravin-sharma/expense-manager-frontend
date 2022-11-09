@@ -21,11 +21,11 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import PrivateRoute from "./components/routing/PrivateRoute";
 
-if (localStorage.getItem("token")) {
-  setTokenInHeader(localStorage.getItem("token"));
-}
-
 function App() {
+  if (localStorage.getItem("token")) {
+    setTokenInHeader(localStorage.getItem("token"));
+  }
+
   return (
     <AuthState>
       <ExpenseState>
@@ -41,11 +41,7 @@ function App() {
                   path="/home"
                   element={<PrivateRoute Component={Home} />}
                 />
-                <Route
-                  exact
-                  path="/"
-                  element={<Navigate to="/login" />}
-                />
+                <Route exact path="/" element={<Navigate to="/login" />} />
                 <Route exact path="/login" element={<Login />} />
                 <Route exact path="/register" element={<Register />} />
                 <Route path="*" element={<PageNotFound />} />

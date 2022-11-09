@@ -10,6 +10,7 @@ import {
   REGISTER_FAIL,
   REGISTER_SUCCESS,
   USER_LOADED,
+  SET_LOADING
 } from "../types";
 import axios from "axios";
 import setTokenInHeader from "../../utils/setTokenInHeader";
@@ -27,10 +28,10 @@ const AuthState = (props) => {
 
   // Load User
   const loadUser = async () => {
+    // setLoading();
     if (localStorage.getItem("token")) {
       setTokenInHeader(localStorage.getItem("token"));
     }
-
     try {
       const res = await axios.get("/user");
       dispatch({ type: USER_LOADED, payload: res.data.user });
@@ -41,6 +42,7 @@ const AuthState = (props) => {
 
   //Register User
   const registerUser = async (formData) => {
+    // setLoading();
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -60,6 +62,7 @@ const AuthState = (props) => {
 
   //Login User
   const login = async (formData) => {
+    // setLoading();
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -76,6 +79,7 @@ const AuthState = (props) => {
 
   //Logout user
   const logout = () => {
+    // setLoading();
     dispatch({type: LOGOUT})
   };
 
@@ -83,6 +87,11 @@ const AuthState = (props) => {
   const clearError = () => {
     dispatch({ type: CLEAR_ERRORS });
   };
+
+  //set loading
+  const setLoading = () =>{
+    dispatch({type: SET_LOADING})
+  }
 
   return (
     <AuthContext.Provider
@@ -97,6 +106,7 @@ const AuthState = (props) => {
         loadUser,
         login,
         logout,
+        setLoading
       }}
     >
       {props.children}

@@ -10,41 +10,12 @@ import {
   CLEAR_CURRENT,
   UPDATE_EXPENSE,
   FILTER_CONTACTS,
-  CLEAR_FILTER,
+  CLEAR_FILTER
 } from "../types";
 
 const ExpenseState = (props) => {
   const initialState = {
-    expenses: [
-      {
-        _id: "63616daaf07ba48aa7cc789f",
-        categoryId: "6360dccc62599fdf3dbb0f02",
-        item: "gym fees",
-        cost: 7000,
-        expenseDate: "2022-11-01",
-      },
-      {
-        _id: "63617d86027be4d8e08ebd05",
-        categoryId: "6361799befc1c0478298a918",
-        item: "meds",
-        cost: 27000,
-        expenseDate: "2022-11-01",
-      },
-      {
-        _id: "636189009c14eaf33ae1b869",
-        categoryId: "6360dccc62599fdf3dbb0f02",
-        item: "supplements",
-        cost: 1000,
-        expenseDate: "2022-11-01",
-      },
-      {
-        _id: "63623072e8503b06cdfc3702",
-        categoryId: "635fd664e11d92e7da1f3ef5",
-        item: "SIP",
-        cost: 10000,
-        expenseDate: "2022-11-01",
-      },
-    ],
+    expenses: [],
     current: null,
     filtered: null
   };
