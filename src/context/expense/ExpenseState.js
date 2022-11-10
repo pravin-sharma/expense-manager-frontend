@@ -1,7 +1,6 @@
 import React, { useReducer } from "react";
 import ExpenseContext from "./expenseContext";
 import expenseReducer from "./expenseReducer";
-import {v4} from  'uuid';
 
 import {
   ADD_EXPENSE,
@@ -9,69 +8,115 @@ import {
   SET_CURRENT,
   CLEAR_CURRENT,
   UPDATE_EXPENSE,
-  FILTER_CONTACTS,
-  CLEAR_FILTER
+  FILTER_EXPENSES,
+  CLEAR_FILTER,
+  EXPENSE_ERROR,
+  GET_EXPENSES,
+  CLEAR_EXPENSES,
 } from "../types";
+import axios from "axios";
 
 const ExpenseState = (props) => {
   const initialState = {
     expenses: [],
     current: null,
-    filtered: null
+    filtered: null,
+    error: null,
+    loading: true,
   };
 
   const [state, dispatch] = useReducer(expenseReducer, initialState);
 
   //Add expense
-  const addExpense = expense =>{
-    expense._id = v4();
-    dispatch({type: ADD_EXPENSE, payload: expense})
-  }
+  const addExpense = async (expense) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      const res = await axios.post("/expense/add", expense, config);
+      dispatch({ type: ADD_EXPENSE, payload: res.data.expense });
+    } catch (error) {
+      dispatch({ type: EXPENSE_ERROR, payload: error.response.data.message });
+    }
+  };
+
+  //Get All Expenses
+  const getExpenses = async () => {
+    try {
+      const res = await axios.get("/expense/getAll");
+      dispatch({ type: GET_EXPENSES, payload: res.data.expenses });
+    } catch (error) {
+      dispatch({ type: EXPENSE_ERROR, payload: error.response.data.message });
+    }
+  };
+
+  //Clear All Expenses
+  const clearExpenses = () => {
+    dispatch({ type: CLEAR_EXPENSES });
+  };
+
   //delete expense
-  const deleteExpense = expenseId => {
-    dispatch({type: DELETE_EXPENSE, payload: expenseId})
-  }
+  const deleteExpense = async (expenseId) => {
+    try {
+      // eslint-disable-next-line
+      const res = await axios.delete(`/expense/delete/${expenseId}`);
+      dispatch({ type: DELETE_EXPENSE, payload: expenseId });
+    } catch (error) {
+      dispatch({ type: EXPENSE_ERROR, payload: error.response.data.message });
+    }
+  };
   //set current expense
-  const setCurrent = expense =>{
-    dispatch({type: SET_CURRENT, payload: expense})
-  }
+  const setCurrent = (expense) => {
+    dispatch({ type: SET_CURRENT, payload: expense });
+  };
   //clear current expense
-  const clearCurrent = () =>{
-    dispatch({type: CLEAR_CURRENT})
-  }
+  const clearCurrent = () => {
+    dispatch({ type: CLEAR_CURRENT });
+  };
 
   //update expense
-  const updateExpense = (expense) =>{
-    dispatch({type: UPDATE_EXPENSE, payload: expense})
-  }
+  const updateExpense = async (expense) => {
+    try {
+      const res = await axios.put(`/expense/update/${expense._id}`, expense);
+      dispatch({ type: UPDATE_EXPENSE, payload: res.data.expense });
+    } catch (error) {
+      dispatch({ type: EXPENSE_ERROR, payload: error.response.data.message });
+    }
+  };
   //filter expenses
 
-  const filterExpense = text => {
-    dispatch({type: FILTER_CONTACTS, payload: text})
-  }
+  const filterExpense = (text) => {
+    dispatch({ type: FILTER_EXPENSES, payload: text });
+  };
   //clear filter expenses
-  const clearFilter = () =>{
-    dispatch({type: CLEAR_FILTER})
-  }
+  const clearFilter = () => {
+    dispatch({ type: CLEAR_FILTER });
+  };
 
   return (
     <ExpenseContext.Provider
-    value={{
+      value={{
         expenses: state.expenses,
         current: state.current,
         filtered: state.filtered,
+        error: state.error,
+        loading: state.loading,
         addExpense,
+        getExpenses,
+        clearExpenses,
         deleteExpense,
         setCurrent,
         clearCurrent,
         updateExpense,
         filterExpense,
-        clearFilter
-    }}
+        clearFilter,
+      }}
     >
-        {props.children}
+      {props.children}
     </ExpenseContext.Provider>
-  )
+  );
 };
 
 export default ExpenseState;
