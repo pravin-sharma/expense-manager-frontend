@@ -6,7 +6,6 @@ const PrivateRoute = (props) => {
   const { isAuthenticated, loading } = useContext(AuthContext);
 
   return !isAuthenticated && !loading?<Navigate to='/' />:<Component />
-  // return
 };
 
 export default PrivateRoute
