@@ -6,6 +6,7 @@ import {
   LOGOUT,
   REGISTER_FAIL,
   REGISTER_SUCCESS,
+  SET_LOADING,
   USER_LOADED,
 } from "../types";
 
@@ -13,19 +14,17 @@ const authReducer = (state, action) => {
   switch (action.type) {
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
-      localStorage.setItem("token", action.payload);
+      // localStorage.setItem("token", action.payload);
       return {
         ...state,
         token: action.payload,
+        isAuthenticated: true,
         loading: false,
       };
     case USER_LOADED:
-      // User is loaded only after the token is validated again
-      // User is isAuthenticated only after user is loaded
       return {
         ...state,
         isAuthenticated: true,
-        loading: false,
         user: action.payload,
       };
     case REGISTER_FAIL:
@@ -47,6 +46,11 @@ const authReducer = (state, action) => {
         ...state,
         error: null,
       };
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: true
+      }
     default:
       return {
         ...state,

@@ -28,8 +28,7 @@ const Register = () => {
   }, [error]);
 
   useEffect(() => {
-    // confirmPassword to uniquely invoke the alert as Register Alert
-    if (isAuthenticated && confirmPassword) {
+    if (isAuthenticated) {
       setAlert(`User with Email: ${email} Registered`, "success");
       navigate("/home");
       clearField();

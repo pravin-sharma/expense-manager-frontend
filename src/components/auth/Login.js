@@ -19,11 +19,10 @@ function Login() {
   }, [error]);
 
   useEffect(() => {
-    if (isAuthenticated && email && password) {
-      //using email, password to uniquely invoke the alert as Login Alert
+    if (isAuthenticated) {
       setAlert("Login Successful", "success");
       navigate("/home");
-      clearField();
+      // clearField();
     }
   }, [isAuthenticated]);
 

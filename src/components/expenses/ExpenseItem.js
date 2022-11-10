@@ -7,7 +7,7 @@ const ExpenseItem = ({ expense }) => {
   const expenseContext = useContext(ExpenseContext)
   const {deleteExpense, setCurrent, clearCurrent, clearFilter} = expenseContext;
 
-  const { _id, item, categoryId, cost, expenseDate } = expense;
+  const { _id, item, categoryId, categoryName, cost, expenseDate } = expense;
 
   const onDelete = () => {
     deleteExpense(_id);
@@ -25,6 +25,8 @@ const ExpenseItem = ({ expense }) => {
       </div>
 
       <div className="me-2">{cost}</div>
+      {/* <div className="me-2">{categoryId}</div> */}
+      <div className="me-2">{categoryName}</div>
 
       <div className="me-2">{expenseDate}</div>
 

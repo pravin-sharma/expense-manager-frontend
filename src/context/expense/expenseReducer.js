@@ -4,8 +4,11 @@ import {
   SET_CURRENT,
   CLEAR_CURRENT,
   UPDATE_EXPENSE,
-  FILTER_CONTACTS,
+  FILTER_EXPENSES,
   CLEAR_FILTER,
+  EXPENSE_ERROR,
+  GET_EXPENSES,
+  CLEAR_EXPENSES
 } from "../types";
 
 const expenseReducer = (state, action) => {
@@ -14,13 +17,29 @@ const expenseReducer = (state, action) => {
       return {
         ...state,
         expenses: [...state.expenses, action.payload],
+        loading: false
       };
+    case GET_EXPENSES:
+      return {
+        ...state,
+        expenses: action.payload,
+        loading: false
+      }
+    case CLEAR_EXPENSES:
+      return {
+          expenses: [],
+          current: null,
+          filtered: null,
+          error: null,
+          loading: false
+      }
     case DELETE_EXPENSE:
       return {
         ...state,
         expenses: state.expenses.filter(
           (expense) => expense._id !== action.payload
         ),
+        loading: false
       };
     case SET_CURRENT:
       return {
@@ -39,18 +58,23 @@ const expenseReducer = (state, action) => {
           expense._id === action.payload._id ? action.payload : expense
         ),
       };
-    case FILTER_CONTACTS:
+    case FILTER_EXPENSES:
       return{
         ...state,
         filtered: state.expenses.filter(expense=>{
           const re = new RegExp(`${action.payload}`,'gi');
-          return expense.item.match(re);
+          return expense.item.match(re) || expense.categoryName.match(re);
         })
       }
     case CLEAR_FILTER:
       return {
         ...state,
         filtered: null
+      }
+    case EXPENSE_ERROR:
+      return {
+        ...state,
+        error: action.payload
       }
     default:
       return state;

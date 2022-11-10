@@ -20,39 +20,47 @@ import { Alerts } from "./components/layout/Alerts";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import PrivateRoute from "./components/routing/PrivateRoute";
-
-if (localStorage.getItem("token")) {
-  setTokenInHeader(localStorage.getItem("token"));
-}
+import axios from "axios";
+import Category from "./components/page/Category";
+import CategoryState from "./context/category/CategoryState";
 
 function App() {
+  axios.defaults.baseURL = "http://localhost:4000/api/v1";
+  if (localStorage.getItem("token")) {
+    setTokenInHeader(localStorage.getItem("token"));
+  }
+
   return (
     <AuthState>
       <ExpenseState>
-        <AlertState>
-          <div className="App">
-            <Router>
-              <NavigationBar />
-              <Alerts />
-              <Routes>
-                {/* <Route exact path="/home" element={<Home />} /> */}
-                <Route
-                  exact
-                  path="/home"
-                  element={<PrivateRoute Component={Home} />}
-                />
-                <Route
-                  exact
-                  path="/"
-                  element={<Navigate to="/login" />}
-                />
-                <Route exact path="/login" element={<Login />} />
-                <Route exact path="/register" element={<Register />} />
-                <Route path="*" element={<PageNotFound />} />
-              </Routes>
-            </Router>
-          </div>
-        </AlertState>
+        <CategoryState>
+          <AlertState>
+            <div className="App">
+              <Router>
+                <NavigationBar />
+                <Alerts />
+                <Routes>
+                  {/* <Route exact path="/home" element={<Home />} /> */}
+                  <Route
+                    exact
+                    path="/home"
+                    element={<PrivateRoute Component={Home} />}
+                  />
+                  <Route
+                    exact
+                    path="/category"
+                    element={<PrivateRoute Component={Category} />}
+                  />
+
+                  <Route exact path="/" element={<Navigate to="/login" />} />
+                  <Route exact path="/login" element={<Login />} />
+                  <Route exact path="/register" element={<Register />} />
+                  <Route path="*" element={<PageNotFound />} />
+                </Routes>
+              </Router>
+            </div>
+          </AlertState>
+        </CategoryState>
       </ExpenseState>
     </AuthState>
   );

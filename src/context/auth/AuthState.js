@@ -10,6 +10,7 @@ import {
   REGISTER_FAIL,
   REGISTER_SUCCESS,
   USER_LOADED,
+  SET_LOADING,
 } from "../types";
 import axios from "axios";
 import setTokenInHeader from "../../utils/setTokenInHeader";
@@ -30,7 +31,6 @@ const AuthState = (props) => {
     if (localStorage.getItem("token")) {
       setTokenInHeader(localStorage.getItem("token"));
     }
-
     try {
       const res = await axios.get("/user");
       dispatch({ type: USER_LOADED, payload: res.data.user });
@@ -50,9 +50,9 @@ const AuthState = (props) => {
     try {
       const res = await axios.post("/register", formData, config);
       dispatch({ type: REGISTER_SUCCESS, payload: res.data.token });
-      // TODO: local storage taking time to get item, so meanwhile using timeout to delay
-      setTimeout(() => loadUser(), 1000);
-      // loadUser()
+      //Setting Token in local storage here, instead of dispatch since I was unable to fetch token inside loadUser(); in time
+      localStorage.setItem("token", res.data?.token);
+      loadUser();
     } catch (error) {
       dispatch({ type: REGISTER_FAIL, payload: error.response.data.message });
     }
@@ -66,9 +66,11 @@ const AuthState = (props) => {
       },
     };
     try {
-      const res = await axios.post('/login',formData, config);
+      const res = await axios.post("/login", formData, config);
       dispatch({ type: LOGIN_SUCCESS, payload: res.data.token });
-      setTimeout(() => loadUser(), 1000);
+      //Setting Token in local storage here, instead of dispatch since I was unable to fetch token inside loadUser(); in time
+      localStorage.setItem("token", res.data?.token);
+      loadUser();
     } catch (error) {
       dispatch({ type: LOGIN_FAIL, payload: error.response.data.message });
     }
@@ -76,12 +78,17 @@ const AuthState = (props) => {
 
   //Logout user
   const logout = () => {
-    dispatch({type: LOGOUT})
+    dispatch({ type: LOGOUT });
   };
 
   //clear errors
   const clearError = () => {
     dispatch({ type: CLEAR_ERRORS });
+  };
+
+  //set loading
+  const setLoading = () => {
+    dispatch({ type: SET_LOADING });
   };
 
   return (
@@ -97,6 +104,7 @@ const AuthState = (props) => {
         loadUser,
         login,
         logout,
+        setLoading,
       }}
     >
       {props.children}

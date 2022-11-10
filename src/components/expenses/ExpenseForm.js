@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import ExpenseContext from "../../context/expense/expenseContext";
+import CategoriesSelect from "../category/CategoriesSelect";
 
 const ExpenseForm = () => {
   const expenseContext = useContext(ExpenseContext);
@@ -12,7 +13,7 @@ const ExpenseForm = () => {
     expenseDate: "",
   });
 
-  const { item, cost, categoryId, expenseDate } = expense;
+  const { item, cost, categoryId, categoryName, expenseDate } = expense;
 
   useEffect(() => {
     if (current) {
@@ -90,24 +91,9 @@ const ExpenseForm = () => {
             </label>
           </div>
         </div>
-        <div className="col-auto">
-          <div className="form-floating">
-            <select
-              className="form-select"
-              id="categoryId"
-              aria-label="Select Expense Category"
-              name="categoryId"
-              value={categoryId}
-              onChange={onChange}
-            >
-              <option>Choose the category</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
-            <label htmlFor="categoryId">Category</label>
-          </div>
-        </div>
+
+        <CategoriesSelect expense={expense} setExpense={setExpense} />
+
         <div className="col-auto">
           <div className="form-floating">
             <input
