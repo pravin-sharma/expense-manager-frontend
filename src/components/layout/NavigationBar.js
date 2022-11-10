@@ -1,25 +1,33 @@
-import React, { Fragment } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import AuthContext from "../../context/auth/authContext";
 import { useContext } from "react";
 import AlertContext from "../../context/alert/alertContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import ExpenseContext from "../../context/expense/expenseContext";
+import CategoryContext from "../../context/category/categoryContext";
 
 const NavigationBar = ({ title, logo }) => {
   const { logout, isAuthenticated, user } = useContext(AuthContext);
   const { setAlert } = useContext(AlertContext);
-  // const navigate = useNavigate();
+  const { clearExpenses } = useContext(ExpenseContext);
+  const { clearCategories } = useContext(CategoryContext);
+  
 
   const onLogout = () => {
     logout();
+    clearExpenses();
+    clearCategories();
+    
     setAlert("Logged Out Successfully", "warning");
-    // TODO: instead of navigate use private route
-    // navigate("/login");
   };
 
   const AuthLink = (
     <div className="d-flex justify-content-center align-items-center">
       <div className="text-light me-4">Welcome, {user?.name}</div>
+      <Link className="btn me-4 btn-outline-success" to="/category">
+        Category
+      </Link>
       <a onClick={onLogout} href="#!" className="btn btn-outline-danger">
         Logout
       </a>
@@ -40,9 +48,10 @@ const NavigationBar = ({ title, logo }) => {
   return (
     <nav className="navbar bg-dark">
       <div className="container">
-        <a
+        <Link
           className="navbar-brand text-light d-flex align-items-center justify-content-between"
           href="#home"
+          to="/home"
         >
           <img
             src={logo}
@@ -52,7 +61,8 @@ const NavigationBar = ({ title, logo }) => {
             className="d-inline-block me-1"
           />
           {title}
-        </a>
+        </Link>
+
         {!isAuthenticated && guestLink}
         {isAuthenticated && AuthLink}
       </div>
