@@ -1,16 +1,32 @@
 import React, { useContext } from "react";
 import AlertContext from "../../context/alert/alertContext";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export const Alerts = () => {
   const alertContext = useContext(AlertContext);
   const { alerts } = alertContext;
 
   return (
     alerts.length > 0 &&
-    alerts.map((alert) => (
-      <div className={`alert alert-${alert.type}`} key={alert.id} role="alert">
-        {alert.msg}
-      </div>
-    ))
+    alerts.forEach((alert) => {
+      // <div className={`alert alert-${alert.type}`} key={alert.id} role="alert">
+      //   {alert.msg}
+      // </div>
+      switch (alert.type) {
+        case "danger":
+          toast.error(alert.msg);
+          break;
+        case "success":
+          toast.success(alert.msg);
+          break;
+        case "warning":
+          toast.warn(alert.msg);
+          break;
+        default:
+          alert(alert.msg);
+      }
+    })
   );
 };
