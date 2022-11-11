@@ -17,14 +17,29 @@ const Categories = () => {
   if (categories.length === 0 && !loading) {
     return <h5 className="text-muted ms-3">No Expenses to show</h5>;
   }
-  
+
   return (
-    <ul className="list-group ms-3">
-      <h2 className="mt-3 mx-3 text-primary">All Categories:</h2>
-      {categories.map((category) => (
-        <CategoryItem category={category} key={category._id} />
-      ))}
-    </ul>
+    <Fragment>
+      <h2 className="mt-3 text-black">All Categories</h2>
+
+      <table className="table align-middle mb-4 bg-white border rounded">
+        <thead className="bg-light align-middle">
+          <tr>
+            <th>Category Name</th>
+            <th>Budget</th>
+            <th>Budget Start Date</th>
+            <th>Budget End Date</th>
+            <th>Expense Total</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {categories.map((category) => (
+            <CategoryItem category={category} key={category._id} />
+          ))}
+        </tbody>
+      </table>
+    </Fragment>
   );
 };
 
