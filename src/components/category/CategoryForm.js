@@ -56,12 +56,12 @@ const CategoryForm = () => {
   };
 
   return (
-    <form className="row gy-2 gx-3 align-items-center" onSubmit={onSubmit}>
-      <h2 className="ms-3 text-primary">
+    <form className="row gy-2 gx-3 align-items-center border rounded bg-dark p-4" onSubmit={onSubmit}>
+      <h2 className="text-light mb-3">
         {current ? "Update Category" : "Add Category"}
       </h2>
-      <div className="row align-items-center m-1">
-        <div className="col-auto">
+      <div className="row align-items-center">
+        <div className="col-auto  mb-3">
           <div className="form-floating">
             <input
               type="text"
@@ -77,7 +77,7 @@ const CategoryForm = () => {
             </label>
           </div>
         </div>
-        <div className="col-auto">
+        <div className="col-auto mb-3">
           <div className="form-floating">
             <input
               type="number"
@@ -94,7 +94,7 @@ const CategoryForm = () => {
           </div>
         </div>
 
-        <div className="col-auto">
+        <div className="col-auto mb-3">
           <div className="form-floating">
             <input
               type="date"
@@ -109,7 +109,7 @@ const CategoryForm = () => {
           </div>
         </div>
 
-        <div className="col-auto">
+        <div className="col-auto mb-3">
           <div className="form-floating">
             <input
               type="date"
@@ -125,13 +125,13 @@ const CategoryForm = () => {
         </div>
 
         <div className="col-auto">
-          <button type="submit" className="btn btn-primary btn-block">
+          <button type="submit" className="btn btn-primary btn-lg">
             {current ? "Update" : "Add"}
           </button>
         </div>
         {current && (
           <div className="col-auto">
-            <button className="btn btn-danger btn-block" onClick={clearAll}>
+            <button className="btn btn-danger btn-lg" onClick={clearAll}>
               Clear
             </button>
           </div>
