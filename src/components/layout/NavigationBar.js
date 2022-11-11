@@ -12,23 +12,25 @@ const NavigationBar = ({ title, logo }) => {
   const { setAlert } = useContext(AlertContext);
   const { clearExpenses } = useContext(ExpenseContext);
   const { clearCategories } = useContext(CategoryContext);
-  
 
   const onLogout = () => {
     logout();
     clearExpenses();
     clearCategories();
-    
+
     setAlert("Logged Out Successfully", "warning");
   };
 
   const AuthLink = (
     <div className="d-flex justify-content-center align-items-center">
       <div className="text-light me-4">Welcome, {user?.name}</div>
-      <Link className="btn me-4 btn-outline-success" to="/category">
+      <Link className="btn me-4 btn-outline-light" to="/home">
+        Expense
+      </Link>
+      <Link className="btn me-4 btn-outline-light" to="/category">
         Category
       </Link>
-      <a onClick={onLogout} href="#!" className="btn btn-outline-danger">
+      <a onClick={onLogout} href="#!" className="btn btn-outline-light">
         Logout
       </a>
     </div>
