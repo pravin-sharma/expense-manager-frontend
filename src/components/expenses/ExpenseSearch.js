@@ -8,22 +8,21 @@ function ExpenseSearch() {
   const text = useRef("");
 
   useEffect(() => {
-    if(filtered == null){
-      text.current.value = ''
+    if (filtered == null) {
+      text.current.value = "";
     }
-  }, [filtered])
-  
+  }, [filtered]);
 
   const onChange = () => {
-    if(text.current.value){
+    if (text.current.value) {
       filterExpense(text.current.value);
-    }else{
+    } else {
       clearFilter();
     }
   };
 
   return (
-    <form className="form-floating ms-3 mb-3">
+    <form className="form-floating mb-3 flex-fill">
       <input
         ref={text}
         type="text"
