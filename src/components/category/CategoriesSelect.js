@@ -26,7 +26,7 @@ const CategoriesSelect = ({expense, setExpense}) => {
   };
 
   return (
-    <div className="col-auto">
+    <div className="col-auto mb-3">
       <div className="form-floating">
         <select
           className="form-select"

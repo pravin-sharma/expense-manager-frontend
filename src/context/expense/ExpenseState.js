@@ -1,6 +1,7 @@
 import React, { useReducer } from "react";
 import ExpenseContext from "./expenseContext";
 import expenseReducer from "./expenseReducer";
+import AlertContext from '../alert/alertContext';
 
 import {
   ADD_EXPENSE,
@@ -15,6 +16,7 @@ import {
   CLEAR_EXPENSES,
 } from "../types";
 import axios from "axios";
+import { useContext } from "react";
 
 const ExpenseState = (props) => {
   const initialState = {
@@ -27,6 +29,8 @@ const ExpenseState = (props) => {
 
   const [state, dispatch] = useReducer(expenseReducer, initialState);
 
+  const {setAlert} = useContext(AlertContext);
+
   //Add expense
   const addExpense = async (expense) => {
     const config = {
@@ -36,6 +40,9 @@ const ExpenseState = (props) => {
     };
     try {
       const res = await axios.post("/expense/add", expense, config);
+      if(res.data.isOverBudget){
+        setAlert(`Category: ${res.data.expense.categoryName} is Over Budget`, 'danger')
+      }
       dispatch({ type: ADD_EXPENSE, payload: res.data.expense });
     } catch (error) {
       dispatch({ type: EXPENSE_ERROR, payload: error.response.data.message });
@@ -43,9 +50,9 @@ const ExpenseState = (props) => {
   };
 
   //Get All Expenses
-  const getExpenses = async () => {
+  const getExpenses = async (filter) => {
     try {
-      const res = await axios.get("/expense/getAll");
+      const res = await axios.get(`/expense?categoryId=${filter?.categoryId}&period=${filter?.period}`);
       dispatch({ type: GET_EXPENSES, payload: res.data.expenses });
     } catch (error) {
       dispatch({ type: EXPENSE_ERROR, payload: error.response.data.message });

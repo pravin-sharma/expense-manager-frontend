@@ -5,19 +5,18 @@ import Categories from "../category/Categories";
 import CategoryForm from "../category/CategoryForm";
 
 const Category = () => {
+  const { loadUser } = useContext(AuthContext);
 
-  const {loadUser} = useContext(AuthContext);
-
-  useEffect(()=>{
+  useEffect(() => {
     loadUser();
     // eslint-disable-next-line
-  },[])
+  }, []);
 
   return (
-    <Fragment>
+    <div className="container pt-5">
       <CategoryForm />
       <Categories />
-    </Fragment>
+    </div>
   );
 };
 

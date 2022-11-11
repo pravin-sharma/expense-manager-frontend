@@ -24,8 +24,16 @@ const Expenses = () => {
   // TODO: added spinner later
   return (
     <Fragment>
-      <Fragment>
-        <ul className="list-group ms-3">
+      <table className="table align-middle mb-4 bg-white border rounded">
+        <thead className="bg-light align-middle">
+          <tr>
+            <th>Expense Name and Cost</th>
+            <th>Category</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
           {filtered != null
             ? filtered.map((expense) => {
                 return <ExpenseItem key={expense._id} expense={expense} />;
@@ -33,11 +41,11 @@ const Expenses = () => {
             : expenses.map((expense) => {
                 return <ExpenseItem key={expense._id} expense={expense} />;
               })}
-        </ul>
-        {filtered?.length === 0 && (
-          <h5 className="text-muted ms-3">No Match found</h5>
-        )}
-      </Fragment>
+        </tbody>
+      </table>
+      {filtered?.length === 0 && (
+        <h5 className="text-muted ms-3">No Match found</h5>
+      )}
     </Fragment>
   );
 };

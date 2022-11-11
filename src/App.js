@@ -24,6 +24,9 @@ import axios from "axios";
 import Category from "./components/page/Category";
 import CategoryState from "./context/category/CategoryState";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function App() {
   axios.defaults.baseURL = "http://localhost:4000/api/v1";
   if (localStorage.getItem("token")) {
@@ -31,13 +34,25 @@ function App() {
   }
 
   return (
-    <AuthState>
-      <ExpenseState>
-        <CategoryState>
-          <AlertState>
+    <AlertState>
+      <AuthState>
+        <ExpenseState>
+          <CategoryState>
             <div className="App">
               <Router>
                 <NavigationBar />
+                <ToastContainer
+                  position="top-center"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                  theme="light"
+                />
                 <Alerts />
                 <Routes>
                   {/* <Route exact path="/home" element={<Home />} /> */}
@@ -59,10 +74,10 @@ function App() {
                 </Routes>
               </Router>
             </div>
-          </AlertState>
-        </CategoryState>
-      </ExpenseState>
-    </AuthState>
+          </CategoryState>
+        </ExpenseState>
+      </AuthState>
+    </AlertState>
   );
 }
 

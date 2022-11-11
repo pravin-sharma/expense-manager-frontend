@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
@@ -54,50 +54,64 @@ function Login() {
   };
 
   return (
-    <div className="container">
-      <h1 className="text-center">Login</h1>
-      <form className="p-4">
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            Email address
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            name="email"
-            placeholder="Email"
-            aria-describedby="emailHelp"
-            value={email}
-            onChange={onChange}
-          />
-          <div id="emailHelp" className="form-text">
-            We'll never share your email with anyone else.
+    <Fragment>
+      <div className="container py-5">
+        <div className="row d-flex justify-content-center align-items-center">
+          <div className="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div className="card bg-dark" style={{ borderRadius: "1rem" }}>
+              <div className="card-body p-5 text-center">
+                <div className="">
+                  <h2 className="fw-bold mb-2 text-uppercase text-white">
+                    Login
+                  </h2>
+                  <p className="text-white-50 mb-5 text-white">
+                    Please enter your login and password!
+                  </p>
+
+                  <div className="form-floating form-outline form-white mb-4">
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      className="form-control form-control-lg"
+                      placeholder="Enter Email"
+                      value={email}
+                      onChange={onChange}
+                    />
+                    <label className="form-label" htmlFor="email">
+                      Email
+                    </label>
+                  </div>
+
+                  <div className="form-floating mb-4">
+                    <input
+                      type="password"
+                      id="password"
+                      name="password"
+                      className="form-control form-control-lg"
+                      placeholder="Enter Password"
+                      value={password}
+                      onChange={onChange}
+                    />
+                    <label className="form-label" htmlFor="password">
+                      Password
+                    </label>
+                  </div>
+
+                  <button
+                    className="btn btn-outline-light btn-lg px-5"
+                    type="submit"
+                    onClick={(e) => handleSubmit(e)}
+                  >
+                    Login | <i className="fa-solid fa-key" />
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            id="password"
-            name="password"
-            placeholder="Password"
-            value={password}
-            onChange={onChange}
-          />
-        </div>
-        <button
-          type="submit"
-          className="btn my-btn-primary"
-          onClick={(e) => handleSubmit(e)}
-        >
-          Login | <i className="fa-solid fa-key" />
-        </button>
-      </form>
-    </div>
+      </div>
+    </Fragment>
   );
 }
 
