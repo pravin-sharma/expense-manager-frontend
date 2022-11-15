@@ -1,6 +1,7 @@
 import React, { Fragment, useContext } from "react";
 import ExpenseContext from "../../context/expense/expenseContext";
 import PropTypes from "prop-types";
+import moment from 'moment';
 
 const ExpenseItem = ({ expense }) => {
   const expenseContext = useContext(ExpenseContext);
@@ -44,14 +45,14 @@ const ExpenseItem = ({ expense }) => {
           <p className="fw-normal mb-1">{categoryName}</p>
           {/* <p className="text-muted mb-0">IT department</p> */}
         </td>
-        <td>{expenseDate}</td>
+        <td>{moment(expenseDate).format("DD-MM-yyyy")}</td>
         <td>
           <button
             type="button"
             onClick={onEditButtonClick}
             className="btn btn-link btn-sm btn-rounded"
           >
-            <i className="fa-solid fa-pen-to-square fa-lg" />
+            <i className="fa-solid fa-pen-to-square fa-lg" style={{color: "#425F57"}} />
           </button>
           <button
             type="button"
