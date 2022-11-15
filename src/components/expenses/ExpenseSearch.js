@@ -22,7 +22,7 @@ function ExpenseSearch() {
   };
 
   return (
-    <form className="form-floating mb-3 flex-fill">
+    <form className="col col-12 col-md-6 form-floating mb-3">
       <input
         ref={text}
         type="text"
@@ -31,7 +31,7 @@ function ExpenseSearch() {
         placeholder="Search Expense by Name/Category"
         onChange={onChange}
       />
-      <label htmlFor="expenseSearch">Search Expense by Name/Category</label>
+      <label className="ps-4" htmlFor="expenseSearch">Search Expense by Name/Category</label>
     </form>
   );
 }
