@@ -43,7 +43,7 @@ const ExpenseFilter = () => {
   }, []);
 
   return (
-    <div className="flex-fill ms-3">
+    <div className="col col-12 col-md-6 mb-3">
       {/* Category */}
       <div className="">
         <button

@@ -69,9 +69,9 @@ const NavigationBar = ({ title, logo }) => {
 
   return (
     <nav className="navbar bg-dark">
-      <div className="container">
+      <div className="container justify-content-center justify-content-md-between">
         <div
-          className="navbar-brand text-light d-flex align-items-center justify-content-between"
+          className="navbar-brand text-light d-flex align-items-center justify-content-between mb-2 mb-md-0"
           href="#home"
           to="/home"
         >
