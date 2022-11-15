@@ -56,11 +56,11 @@ const CategoryForm = () => {
   };
 
   return (
-    <form className="row gy-2 gx-3 align-items-center border rounded bg-dark p-4" onSubmit={onSubmit}>
+    <div className="row gy-2 gx-3 align-items-center border rounded bg-dark p-4" onSubmit={onSubmit}>
       <h2 className="text-light mb-3">
         {current ? "Update Category" : "Add Category"}
       </h2>
-      <div className="row align-items-center">
+      <form className="row align-items-center">
         <div className="col-auto  mb-3">
           <div className="form-floating">
             <input
@@ -71,6 +71,8 @@ const CategoryForm = () => {
               name="categoryName"
               value={categoryName}
               onChange={onChange}
+              required
+              minLength={2}
             />
             <label htmlFor="categoryName">
               Category Name <i className="fa-solid fa-money-check" />
@@ -87,6 +89,9 @@ const CategoryForm = () => {
               name="budget"
               value={budget}
               onChange={onChange}
+              required
+              min={1}
+              max={9999999}
             />
             <label htmlFor="budget">
               Budget (<i className="fa-solid fa-indian-rupee-sign fa-xs" />)
@@ -104,6 +109,7 @@ const CategoryForm = () => {
               name="budgetStartDate"
               value={budgetStartDate}
               onChange={onChange}
+              required
             />
             <label htmlFor="budgetStartDate">Budget Start Date</label>
           </div>
@@ -119,13 +125,14 @@ const CategoryForm = () => {
               name="budgetEndDate"
               value={budgetEndDate}
               onChange={onChange}
+              required
             />
             <label htmlFor="budgetEndDate">Budget End Date</label>
           </div>
         </div>
 
         <div className="col-auto">
-          <button type="submit" className="btn btn-primary btn-lg">
+          <button type="submit" className="btn btn-primary btn-lg my-btn-primary">
             {current ? "Update" : "Add"}
           </button>
         </div>
@@ -136,8 +143,8 @@ const CategoryForm = () => {
             </button>
           </div>
         )}
-      </div>
-    </form>
+      </form>
+    </div>
   );
 };
 

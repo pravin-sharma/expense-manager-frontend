@@ -42,7 +42,6 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     login(formData);
   };
 
@@ -68,43 +67,46 @@ function Login() {
                     Please enter your login and password!
                   </p>
 
-                  <div className="form-floating form-outline form-white mb-4">
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      className="form-control form-control-lg"
-                      placeholder="Enter Email"
-                      value={email}
-                      onChange={onChange}
-                    />
-                    <label className="form-label" htmlFor="email">
-                      Email
-                    </label>
-                  </div>
+                  <form onSubmit={handleSubmit}>
+                    <div className="form-floating form-outline form-white mb-4">
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        className="form-control form-control-lg"
+                        placeholder="Enter Email"
+                        value={email}
+                        onChange={onChange}
+                        required
+                      />
+                      <label className="form-label" htmlFor="email">
+                        Email
+                      </label>
+                    </div>
 
-                  <div className="form-floating mb-4">
-                    <input
-                      type="password"
-                      id="password"
-                      name="password"
-                      className="form-control form-control-lg"
-                      placeholder="Enter Password"
-                      value={password}
-                      onChange={onChange}
-                    />
-                    <label className="form-label" htmlFor="password">
-                      Password
-                    </label>
-                  </div>
+                    <div className="form-floating mb-4">
+                      <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        className="form-control form-control-lg"
+                        placeholder="Enter Password"
+                        value={password}
+                        onChange={onChange}
+                        required
+                      />
+                      <label className="form-label" htmlFor="password">
+                        Password
+                      </label>
+                    </div>
 
-                  <button
-                    className="btn btn-outline-light btn-lg px-5"
-                    type="submit"
-                    onClick={(e) => handleSubmit(e)}
-                  >
-                    Login | <i className="fa-solid fa-key" />
-                  </button>
+                    <button
+                      className="btn btn-outline-light btn-lg px-5"
+                      type="submit"
+                    >
+                      Login | <i className="fa-solid fa-key" />
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>

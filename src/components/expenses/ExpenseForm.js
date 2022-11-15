@@ -45,20 +45,24 @@ const ExpenseForm = () => {
       updateExpense(expense);
       clearCurrent();
     }
-    setExpense({
-      item: "",
-      cost: "",
-      categoryId: "",
-      expenseDate: "",
-    });
+
+    // setExpense({
+    //   item: "",
+    //   cost: "",
+    //   categoryId: "",
+    //   expenseDate: "",
+    // });
   };
 
   return (
-    <form className="row gy-2 gx-3 align-items-center border rounded bg-dark p-4" onSubmit={onSubmit}>
+    <div
+      className="row gy-2 gx-3 align-items-center border rounded bg-dark p-4"
+      onSubmit={onSubmit}
+    >
       <h2 className="text-light mb-3">
         {current ? "Update Expense" : "Add Expense"}
       </h2>
-      <div className="row align-items-center">
+      <form className="row align-items-center">
         <div className="col-auto mb-3">
           <div className="form-floating">
             <input
@@ -69,6 +73,8 @@ const ExpenseForm = () => {
               name="item"
               value={item}
               onChange={onChange}
+              required
+              minLength={2}
             />
             <label htmlFor="name">
               Expense Name <i className="fa-solid fa-money-check" />
@@ -85,6 +91,9 @@ const ExpenseForm = () => {
               name="cost"
               value={cost}
               onChange={onChange}
+              required
+              min={1}
+              max={9999999}
             />
             <label htmlFor="cost">
               Cost (<i className="fa-solid fa-indian-rupee-sign fa-xs" />)
@@ -104,12 +113,13 @@ const ExpenseForm = () => {
               name="expenseDate"
               value={expenseDate}
               onChange={onChange}
+              required
             />
             <label htmlFor="date">Date</label>
           </div>
         </div>
         <div className="col-auto">
-          <button type="submit" className="btn btn-primary btn-lg">
+          <button type="submit" className="btn btn-primary btn-lg my-btn-primary">
             {current ? "Update" : "Add"}
           </button>
         </div>
@@ -120,8 +130,8 @@ const ExpenseForm = () => {
             </button>
           </div>
         )}
-      </div>
-    </form>
+      </form>
+    </div>
   );
 };
 

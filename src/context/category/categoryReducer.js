@@ -7,6 +7,7 @@ import {
   CATEGORY_ERROR,
   SET_CURRENT,
   CLEAR_CURRENT,
+  CLEAR_ERRORS,
 } from "../types";
 
 function categoryReducer(state, action) {
@@ -62,7 +63,13 @@ function categoryReducer(state, action) {
     case CATEGORY_ERROR:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
       };
 
     default:

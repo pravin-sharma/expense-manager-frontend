@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import AuthContext from "../../context/auth/authContext";
 import { useContext } from "react";
 import AlertContext from "../../context/alert/alertContext";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import ExpenseContext from "../../context/expense/expenseContext";
 import CategoryContext from "../../context/category/categoryContext";
 
@@ -24,12 +24,22 @@ const NavigationBar = ({ title, logo }) => {
   const AuthLink = (
     <div className="d-flex justify-content-center align-items-center">
       <div className="text-light me-4">Welcome, {user?.name}</div>
-      <Link className="btn me-4 btn-outline-light" to="/home">
+      <NavLink
+        to="/home"
+        className={({ isActive }) =>
+          isActive ? "btn me-4 btn-light" : " btn me-4 btn-outline-light"
+        }
+      >
         Expense
-      </Link>
-      <Link className="btn me-4 btn-outline-light" to="/category">
+      </NavLink>
+      <NavLink
+        to="/category"
+        className={({ isActive }) =>
+          isActive ? "btn me-4 btn-light" : " btn me-4 btn-outline-light"
+        }
+      >
         Category
-      </Link>
+      </NavLink>
       <a onClick={onLogout} href="#!" className="btn btn-outline-light">
         Logout
       </a>
@@ -38,19 +48,29 @@ const NavigationBar = ({ title, logo }) => {
 
   const guestLink = (
     <div className="d-flex justify-content-center align-items-center">
-      <Link className="btn me-4 btn-outline-light" to="/login">
+      <NavLink
+        to="/login"
+        className={({ isActive }) =>
+          isActive ? "btn me-4 btn-light" : " btn me-4 btn-outline-light"
+        }
+      >
         Login
-      </Link>
-      <Link className="btn me-4 btn-outline-light" to="/register">
+      </NavLink>
+      <NavLink
+        to="/register"
+        className={({ isActive }) =>
+          isActive ? "btn me-4 btn-light" : " btn me-4 btn-outline-light"
+        }
+      >
         Register
-      </Link>
+      </NavLink>
     </div>
   );
 
   return (
     <nav className="navbar bg-dark">
       <div className="container">
-        <Link
+        <div
           className="navbar-brand text-light d-flex align-items-center justify-content-between"
           href="#home"
           to="/home"
@@ -63,7 +83,7 @@ const NavigationBar = ({ title, logo }) => {
             className="d-inline-block me-1"
           />
           {title}
-        </Link>
+        </div>
 
         {!isAuthenticated && guestLink}
         {isAuthenticated && AuthLink}

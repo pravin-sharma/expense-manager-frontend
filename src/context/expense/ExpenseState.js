@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import ExpenseContext from "./expenseContext";
 import expenseReducer from "./expenseReducer";
-import AlertContext from '../alert/alertContext';
+import AlertContext from "../alert/alertContext";
 
 import {
   ADD_EXPENSE,
@@ -12,6 +12,7 @@ import {
   FILTER_EXPENSES,
   CLEAR_FILTER,
   EXPENSE_ERROR,
+  CLEAR_ERRORS,
   GET_EXPENSES,
   CLEAR_EXPENSES,
 } from "../types";
@@ -29,7 +30,7 @@ const ExpenseState = (props) => {
 
   const [state, dispatch] = useReducer(expenseReducer, initialState);
 
-  const {setAlert} = useContext(AlertContext);
+  const { setAlert } = useContext(AlertContext);
 
   //Add expense
   const addExpense = async (expense) => {
@@ -40,8 +41,11 @@ const ExpenseState = (props) => {
     };
     try {
       const res = await axios.post("/expense/add", expense, config);
-      if(res.data.isOverBudget){
-        setAlert(`Category: ${res.data.expense.categoryName} is Over Budget`, 'danger')
+      if (res.data.isOverBudget) {
+        setAlert(
+          `Category: ${res.data.expense.categoryName} is Over Budget`,
+          "danger"
+        );
       }
       dispatch({ type: ADD_EXPENSE, payload: res.data.expense });
     } catch (error) {
@@ -52,7 +56,9 @@ const ExpenseState = (props) => {
   //Get All Expenses
   const getExpenses = async (filter) => {
     try {
-      const res = await axios.get(`/expense?categoryId=${filter?.categoryId}&period=${filter?.period}`);
+      const res = await axios.get(
+        `/expense?categoryId=${filter?.categoryId}&period=${filter?.period}`
+      );
       dispatch({ type: GET_EXPENSES, payload: res.data.expenses });
     } catch (error) {
       dispatch({ type: EXPENSE_ERROR, payload: error.response.data.message });
@@ -102,6 +108,11 @@ const ExpenseState = (props) => {
     dispatch({ type: CLEAR_FILTER });
   };
 
+  //clear error
+  const clearError = () => {
+    dispatch({ type: CLEAR_ERRORS });
+  };
+
   return (
     <ExpenseContext.Provider
       value={{
@@ -119,6 +130,7 @@ const ExpenseState = (props) => {
         updateExpense,
         filterExpense,
         clearFilter,
+        clearError,
       }}
     >
       {props.children}
