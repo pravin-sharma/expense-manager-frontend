@@ -7,6 +7,7 @@ import {
   CATEGORY_ERROR,
   SET_CURRENT,
   CLEAR_CURRENT,
+  CLEAR_ERRORS,
 } from "../types";
 
 import React from "react";
@@ -86,6 +87,11 @@ const CategoryState = (props) => {
     }
   };
 
+  //clear errors
+  const clearError = () => {
+    dispatch({ type: CLEAR_ERRORS });
+  };
+
   return (
     <CategoryContext.Provider
       value={{
@@ -100,6 +106,7 @@ const CategoryState = (props) => {
         clearCategories,
         setCurrent,
         clearCurrent,
+        clearError,
       }}
     >
       {props.children}
