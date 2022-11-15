@@ -41,6 +41,22 @@ const Expenses = () => {
             : expenses.map((expense) => {
                 return <ExpenseItem key={expense._id} expense={expense} />;
               })}
+          {filtered != null ? (
+            <tr>
+              <td>
+                Expense Total:{" "}
+                {filtered.reduce((acc, curr) => acc + curr.cost, 0)}
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          ):(<tr>
+            <td>
+              Expense Total:{" "}
+              {expenses.reduce((acc, curr) => acc + curr.cost, 0)}
+            </td>
+          </tr>)}
         </tbody>
       </table>
       {filtered?.length === 0 && (
