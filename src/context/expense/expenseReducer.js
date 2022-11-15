@@ -8,7 +8,8 @@ import {
   CLEAR_FILTER,
   EXPENSE_ERROR,
   GET_EXPENSES,
-  CLEAR_EXPENSES
+  CLEAR_EXPENSES,
+  CLEAR_ERRORS,
 } from "../types";
 
 const expenseReducer = (state, action) => {
@@ -17,29 +18,29 @@ const expenseReducer = (state, action) => {
       return {
         ...state,
         expenses: [...state.expenses, action.payload],
-        loading: false
+        loading: false,
       };
     case GET_EXPENSES:
       return {
         ...state,
         expenses: action.payload,
-        loading: false
-      }
+        loading: false,
+      };
     case CLEAR_EXPENSES:
       return {
-          expenses: [],
-          current: null,
-          filtered: null,
-          error: null,
-          loading: false
-      }
+        expenses: [],
+        current: null,
+        filtered: null,
+        error: null,
+        loading: false,
+      };
     case DELETE_EXPENSE:
       return {
         ...state,
         expenses: state.expenses.filter(
           (expense) => expense._id !== action.payload
         ),
-        loading: false
+        loading: false,
       };
     case SET_CURRENT:
       return {
@@ -59,23 +60,28 @@ const expenseReducer = (state, action) => {
         ),
       };
     case FILTER_EXPENSES:
-      return{
+      return {
         ...state,
-        filtered: state.expenses.filter(expense=>{
-          const re = new RegExp(`${action.payload}`,'gi');
+        filtered: state.expenses.filter((expense) => {
+          const re = new RegExp(`${action.payload}`, "gi");
           return expense.item.match(re) || expense.categoryName.match(re);
-        })
-      }
+        }),
+      };
     case CLEAR_FILTER:
       return {
         ...state,
-        filtered: null
-      }
+        filtered: null,
+      };
     case EXPENSE_ERROR:
       return {
         ...state,
-        error: action.payload
-      }
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
     default:
       return state;
   }
