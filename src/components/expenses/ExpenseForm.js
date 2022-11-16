@@ -46,12 +46,12 @@ const ExpenseForm = () => {
       clearCurrent();
     }
 
-    // setExpense({
-    //   item: "",
-    //   cost: "",
-    //   categoryId: "",
-    //   expenseDate: "",
-    // });
+    setExpense({
+      item: "",
+      cost: "",
+      categoryId: "",
+      expenseDate: "",
+    });
   };
 
   return (
