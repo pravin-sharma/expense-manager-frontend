@@ -35,6 +35,7 @@ const CategoriesSelect = ({expense, setExpense}) => {
           name="categoryId"
           value={expense.categoryId}
           onChange={onChange}
+          required
         >
           {options.map((option) => {
             return (
