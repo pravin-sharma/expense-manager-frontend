@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from "react";
+import React, { useContext } from "react";
 import { useEffect } from "react";
 import AlertContext from "../../context/alert/alertContext";
 import AuthContext from "../../context/auth/authContext";
@@ -24,6 +24,7 @@ const Home = () => {
       setAlert(error, "danger");
       clearError();
     }
+    // eslint-disable-next-line
   }, [error]);
 
   return (

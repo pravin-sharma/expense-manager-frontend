@@ -25,10 +25,10 @@ const ExpenseFilter = () => {
     setFilter({ ...filter, [e.target.name]: e.target.value });
 
     //button active state
-    if (e.target.name == "period") {
+    if (e.target.name === "period") {
       setActivePeriod(e.target.id);
     }
-    if (e.target.name == "categoryId") {
+    if (e.target.name === "categoryId") {
       setActiveCategory(e.target.id);
     }
   };
@@ -40,6 +40,7 @@ const ExpenseFilter = () => {
 
   useEffect(() => {
     getCategories();
+    // eslint-disable-next-line
   }, []);
 
   return (
