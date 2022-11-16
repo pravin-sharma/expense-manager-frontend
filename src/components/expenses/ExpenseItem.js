@@ -8,7 +8,7 @@ const ExpenseItem = ({ expense }) => {
   const { deleteExpense, setCurrent, clearCurrent, clearFilter } =
     expenseContext;
 
-  const { _id, item, categoryId, categoryName, cost, expenseDate } = expense;
+  const { _id, item, categoryName, cost, expenseDate } = expense;
 
   const onDelete = () => {
     deleteExpense(_id);
