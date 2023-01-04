@@ -13,7 +13,7 @@ const ExpenseForm = () => {
     expenseDate: "",
   });
 
-  const { item, cost, categoryId, categoryName, expenseDate } = expense;
+  const { item, cost , expenseDate } = expense;
 
   useEffect(() => {
     if (current) {

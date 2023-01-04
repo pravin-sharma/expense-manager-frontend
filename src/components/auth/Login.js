@@ -22,7 +22,7 @@ function Login() {
     if (isAuthenticated) {
       setAlert("Login Successful", "success");
       navigate("/home");
-      // clearField();
+      clearField();
     }
   }, [isAuthenticated]);
 

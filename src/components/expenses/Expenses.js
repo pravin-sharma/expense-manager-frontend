@@ -1,10 +1,8 @@
 import React, { Fragment, useContext } from "react";
 import { useEffect } from "react";
 import ExpenseContext from "../../context/expense/expenseContext";
-import Spinner from "../layout/Spinner";
 import AuthContext from "../../context/auth/authContext";
 import ExpenseItem from "./ExpenseItem";
-import axios from "axios";
 const Expenses = () => {
   const expenseContext = useContext(ExpenseContext);
   const { expenses, filtered, getExpenses, loading } = expenseContext;
@@ -15,6 +13,7 @@ const Expenses = () => {
     if (isAuthenticated) {
       getExpenses();
     }
+    // eslint-disable-next-line
   }, [isAuthenticated]);
 
   if (expenses.length === 0 && !loading) {

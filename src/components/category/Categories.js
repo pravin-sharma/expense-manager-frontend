@@ -12,6 +12,7 @@ const Categories = () => {
     if (isAuthenticated) {
       getCategories();
     }
+    // eslint-disable-next-line
   }, [isAuthenticated]);
 
   if (categories.length === 0 && !loading) {

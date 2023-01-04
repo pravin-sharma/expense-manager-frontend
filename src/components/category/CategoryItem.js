@@ -14,7 +14,6 @@ const CategoryItem = ({ category }) => {
     budgetStartDate,
     categoryName,
     expenseTotal,
-    isDefault,
   } = category;
 
   const onDelete = () => {
